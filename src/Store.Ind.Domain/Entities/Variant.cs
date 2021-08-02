@@ -1,6 +1,6 @@
 namespace Store.Ind.Domain.Entities
 {
-    public class Variant
+    public class Variant : BaseEntity
     {
         
     }

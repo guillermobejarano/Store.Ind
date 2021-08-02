@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Store.Ind.Domain.Interfaces;
+using Store.Ind.Insfrastructure.Data;
 
 namespace Store.Ind.Api
 {
@@ -26,6 +29,10 @@ namespace Store.Ind.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<StoreDbContext>(opts =>
+                 opts.UseInMemoryDatabase("userDB"));
+            services.AddScoped<StoreDbContext>();
+            services.AddScoped<IRepository, EfRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
