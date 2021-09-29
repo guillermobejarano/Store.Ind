@@ -3,6 +3,7 @@ using Store.Ind.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Store.Ind.Insfrastructure.Data
 {
@@ -15,46 +16,47 @@ namespace Store.Ind.Insfrastructure.Data
             _dbContext = dbContext;
         }
 
-        public T GetById<T>(int id) where T : BaseEntity
+        public async Task<T> GetById<T>(int id) where T : BaseEntity
         {
-            return _dbContext.Set<T>().SingleOrDefault(e => e.Id == id);
+            return await _dbContext.Set<T>()
+                .SingleOrDefaultAsync(e => e.Id == id);
         }
 
-        public T GetById<T>(int id, string include) where T : BaseEntity
+        public async Task<T> GetById<T>(int id, string include) where T : BaseEntity
         {
-            return _dbContext.Set<T>()
+            return await _dbContext.Set<T>()
                 .Include(include)
-                .SingleOrDefault(e => e.Id == id);
+                .SingleOrDefaultAsync(e => e.Id == id);
         }
 
-        public List<T> List<T>(ISpecification<T> spec = null) where T : BaseEntity
+        public async Task<List<T>> List<T>(ISpecification<T> spec = null) where T : BaseEntity
         {
             var query = _dbContext.Set<T>().AsQueryable();
             if (spec != null)
             {
                 query = query.Where(spec.Criteria);
             }
-            return query.ToList();
+            return await query.ToListAsync();
         }
 
-        public T Add<T>(T entity) where T : BaseEntity
+        public async Task<T> Add<T>(T entity) where T : BaseEntity
         {
-            _dbContext.Set<T>().Add(entity);
-            _dbContext.SaveChanges();
+            await _dbContext.Set<T>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
 
-            return entity;
+            return  entity;
         }
 
-        public void Delete<T>(T entity) where T : BaseEntity
+        public async Task Delete<T>(T entity) where T : BaseEntity
         {
             _dbContext.Set<T>().Remove(entity);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Update<T>(T entity) where T : BaseEntity
+        public async  Task Update<T>(T entity) where T : BaseEntity
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
