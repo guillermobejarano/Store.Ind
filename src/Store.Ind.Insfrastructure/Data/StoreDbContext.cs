@@ -1,8 +1,5 @@
-using Store.Ind.Domain;
-using Store.Ind.Domain.Interfaces;
-using Store.Ind.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using Store.Ind.Domain.Entities;
 
 
 namespace Store.Ind.Insfrastructure.Data
@@ -10,10 +7,6 @@ namespace Store.Ind.Insfrastructure.Data
     public class StoreDbContext : DbContext
     {
         //private readonly IDomainEventDispatcher _dispatcher;
-
-        //public AppDbContext(DbContextOptions options) : base(options)
-        //{
-        //}
 
         public StoreDbContext(DbContextOptions<StoreDbContext> options)//, IDomainEventDispatcher dispatcher)
             : base(options)
