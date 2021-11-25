@@ -21,12 +21,18 @@ namespace Store.Ind.Insfrastructure.Services
             _repo = repo;
             _mapper = mapper;
         }
-        public async Task CreateProductAsync(ProductDto productDto)
+        public async Task Create(ProductDto productDto)
         {
             try
             {
                 var product =
                     _mapper.Map<ProductDto, Product>(productDto);
+
+                if (productDto.CategoryId > 0)
+                {
+                    var category = await _repo.GetById<Category>(productDto.CategoryId);
+                    product.Category = category;
+                }
 
                 await _repo.Add(product);
 
@@ -38,21 +44,28 @@ namespace Store.Ind.Insfrastructure.Services
             }
         }
 
-        public async Task<ProductDto> GetProductAsync(int id)
+        public async Task<ProductDto> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var product = await _repo.GetById<Product>(id);
+                return _mapper.Map<Product, ProductDto>(product);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
-        public async Task<IEnumerable<ProductDto>> ListAllProductsAsync()
+        public async Task<IEnumerable<ProductDto>> ListAll()
         {
             try
             {
                 var products = await _repo.List<Product>();
                 return _mapper.Map<IList<Product>, IList<ProductDto>>(products);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
                 return null;
             }
         }

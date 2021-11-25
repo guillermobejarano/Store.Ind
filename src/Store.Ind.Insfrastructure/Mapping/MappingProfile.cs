@@ -9,16 +9,18 @@ namespace Store.Ind.Insfrastructure.Mapping
         public MappingProfile()
         {
             CreateMap<Product, ProductDto>()
-                .ForMember(
-                      dest => dest.CategoryName,
-                      opt => opt.MapFrom(src => src.Category.Name))
+                //.ForMember(
+                //      dest => dest.CategoryName,
+                //      opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(
                       dest => dest.BrandName,
                       opt => opt.MapFrom(src => src.Brand.Name))
                 .ReverseMap();
-                ////.AfterMap((product, productDto) => product.Category = new Category { 
-                ////    Name = productDto.Name
-                //}).ReverseMap();
+            ////.AfterMap((product, productDto) => product.Category = new Category { 
+            ////    Name = productDto.Name
+            //}).ReverseMap();
+            CreateMap<Category, CategoryDto>()
+                .ReverseMap();
         }
     }
 }

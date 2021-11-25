@@ -2,7 +2,7 @@
 
 namespace Store.Ind.Domain.Dtos
 {
-    public class ProductDto
+    public class ProductDto : CsvReportBaseDto
     {
         public string Name { get; set; }
 
@@ -16,7 +16,7 @@ namespace Store.Ind.Domain.Dtos
         public int Quantity { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
 
         public string BrandName { get; set; }
     }

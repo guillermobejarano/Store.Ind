@@ -2,7 +2,7 @@
 
 namespace Store.Ind.Insfrastructure.Services
 {
-    public interface IProductService : IService<ProductDto>
+    public interface ICategoryService : IService<CategoryDto>
     {
     }
 }
