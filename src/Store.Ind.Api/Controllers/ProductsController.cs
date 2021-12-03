@@ -52,6 +52,7 @@ namespace Store.Ind.Api.Controllers
         [HttpPost]
         public async Task Post(ProductModel product)
         {
+
             await _service.Create( new Domain.Dtos.ProductDto { 
                 Name = product.Name, 
                 CategoryId = product.CategoryId,
@@ -59,7 +60,10 @@ namespace Store.Ind.Api.Controllers
                 CostPrice = product.CostPrice, FinalPrice = product.FinalPrice,
                 CreatedAt = product.CreatedAt,
                 Description = product.Description,
-                Quantity = product.Quantity
+                //Quantity = product.Quantity,
+                Variants = product.Variants
+                .Select(v => new VariantDto { Color = v.Color.Code, Size = v.Size.Code, Stock = v.Stock})
+                .ToList()
             });
         }
 

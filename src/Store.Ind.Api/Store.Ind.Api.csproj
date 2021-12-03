@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Insfratracture\**" />
+    <Content Remove="Insfratracture\**" />
+    <EmbeddedResource Remove="Insfratracture\**" />
+    <None Remove="Insfratracture\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FileHelpers" Version="3.5.1" />
@@ -19,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Insfratracture\AutoMapper\" />
     <Folder Include="Model\Product\Out\" />
     <Folder Include="Support\Mappers\" />
   </ItemGroup>

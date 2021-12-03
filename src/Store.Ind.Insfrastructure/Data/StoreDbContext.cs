@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Store.Ind.Domain.Entities;
-
+using Store.Ind.Insfrastructure.Configuration.EntityTypes;
 
 namespace Store.Ind.Insfrastructure.Data
 {
@@ -30,6 +30,9 @@ namespace Store.Ind.Insfrastructure.Data
 
             // alternately this is built-in to EF Core 2.2
             //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.ApplyConfiguration(new TypeSizeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TypeColorEntityTypeConfiguration());
         }
 
         public override int SaveChanges()
@@ -61,7 +64,7 @@ namespace Store.Ind.Insfrastructure.Data
         #region Custom
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options)
         {
-            _connString = "Server=localhost;Database=store.ind;Trusted_Connection=True;";
+            _connString = @"Server=localhost\sqlexpress;Database=store.ind;Trusted_Connection=True;";
         }
 
         public class SampleDbContextDesignFactory : IDesignTimeDbContextFactory<StoreDbContext>
@@ -70,7 +73,7 @@ namespace Store.Ind.Insfrastructure.Data
             {
                 var optionsBuilder = new DbContextOptionsBuilder<StoreDbContext>();
 
-                var connectionString = "Server=localhost;Database=store.ind;Trusted_Connection=True;";
+                var connectionString = @"Server=localhost\sqlexpress;Database=store.ind;Trusted_Connection=True;";
                 optionsBuilder.UseSqlServer(connectionString);
                 //optionsBuilder.UseSqlServer().UseSnakeCaseNamingConvention<StoreDbContext>();
                 return new StoreDbContext(optionsBuilder.Options);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Store.Ind.Api.Model.Product.In
 {
@@ -12,9 +13,10 @@ namespace Store.Ind.Api.Model.Product.In
         public decimal FinalPrice { get; set; }
 
         public string Barcode { get; set; }
-        public int Quantity { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public int CategoryId { get; set; }
+
+        public List<VariantModel> Variants { get; set; }
     }
 }

@@ -7,6 +7,6 @@ namespace Store.Ind.Insfrastructure.Services
     {
         Task<IEnumerable<T>> ListAll();
         Task<T> GetById(int id);
-        Task Create(T categoryDto);
+        Task Create(T dto);
     }
 }

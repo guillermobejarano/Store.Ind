@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Store.Ind.Domain.Dtos;
 using Store.Ind.Domain.Entities;
 using Store.Ind.Domain.Interfaces;
+using Store.Ind.Domain.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -61,7 +62,7 @@ namespace Store.Ind.Insfrastructure.Services
         {
             try
             {
-                var products = await _repo.List<Product>();
+                var products = await _repo.List<Product>(new ListProductsAndVariantsSpecifications());
                 return _mapper.Map<IList<Product>, IList<ProductDto>>(products);
             }
             catch (Exception ex)

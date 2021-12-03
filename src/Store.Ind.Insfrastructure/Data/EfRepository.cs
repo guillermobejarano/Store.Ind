@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System;
 
 namespace Store.Ind.Insfrastructure.Data
 {
@@ -31,12 +33,25 @@ namespace Store.Ind.Insfrastructure.Data
 
         public async Task<List<T>> List<T>(ISpecification<T> spec = null) where T : BaseEntity
         {
-            var query = _dbContext.Set<T>().AsQueryable();
-            if (spec != null)
+            // fetch a Queryable that includes all expression-based includes
+            var queryableResultWithIncludes = spec.Includes
+                .Aggregate(_dbContext.Set<T>().AsQueryable(),
+                    (current, include) => current.Include(include));
+
+            // modify the IQueryable to include any string-based include statements
+            var secondaryResult = spec.IncludeStrings
+                .Aggregate(queryableResultWithIncludes,
+                    (current, include) => current.Include(include));
+
+            // return the result of the query using the specification's criteria expression
+            if (spec.Criteria != null)
             {
-                query = query.Where(spec.Criteria);
+                secondaryResult = secondaryResult
+                            .Where(spec.Criteria);
             }
-            return await query.ToListAsync();
+
+            return await secondaryResult
+                            .ToListAsync();
         }
 
         public async Task<T> Add<T>(T entity) where T : BaseEntity

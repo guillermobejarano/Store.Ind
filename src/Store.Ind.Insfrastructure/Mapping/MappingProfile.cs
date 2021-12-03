@@ -21,6 +21,9 @@ namespace Store.Ind.Insfrastructure.Mapping
             //}).ReverseMap();
             CreateMap<Category, CategoryDto>()
                 .ReverseMap();
+
+            CreateMap<Variant, VariantDto>()
+               .ReverseMap();
         }
     }
 }

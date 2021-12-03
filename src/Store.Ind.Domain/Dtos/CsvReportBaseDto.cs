@@ -3,7 +3,7 @@
 namespace Store.Ind.Domain.Dtos
 {
     [DelimitedRecord(",")]
-    public class CsvReportBaseDto
+    public class CsvReportBaseDto : BaseDto
     {
     }
 }

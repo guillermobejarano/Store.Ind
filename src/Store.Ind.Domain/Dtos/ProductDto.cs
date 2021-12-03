@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Store.Ind.Domain.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace Store.Ind.Domain.Dtos
 {
@@ -19,5 +21,15 @@ namespace Store.Ind.Domain.Dtos
         public int CategoryId { get; set; }
 
         public string BrandName { get; set; }
+
+        public List<VariantDto> Variants { get; set; }
+    }
+
+    public class VariantDto
+    {
+        public TypeSizes Size { get; set; }
+        public TypeColors Color { get; set; }
+
+        public int Stock { get; set; }
     }
 }
