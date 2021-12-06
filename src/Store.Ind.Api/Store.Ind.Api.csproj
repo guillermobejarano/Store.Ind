@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\Product\Out\" />
     <Folder Include="Support\Mappers\" />
   </ItemGroup>
 

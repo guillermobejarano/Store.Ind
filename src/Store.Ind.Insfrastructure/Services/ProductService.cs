@@ -62,7 +62,7 @@ namespace Store.Ind.Insfrastructure.Services
         {
             try
             {
-                var products = await _repo.List<Product>(new ListProductsAndVariantsSpecifications());
+                 var products = await _repo.List<Product>(new ListProductsAndVariantsSpecifications());
                 return _mapper.Map<IList<Product>, IList<ProductDto>>(products);
             }
             catch (Exception ex)

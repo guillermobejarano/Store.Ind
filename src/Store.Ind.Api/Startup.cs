@@ -36,6 +36,8 @@ namespace Store.Ind.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Store.Ind.Api", Version = "v1" });
             });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +60,13 @@ namespace Store.Ind.Api
             {
                 endpoints.MapControllers();
             });
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
         }
     }
 }

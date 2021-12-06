@@ -7,6 +7,7 @@ namespace Store.Ind.Domain.Specifications
         public ListProductsAndVariantsSpecifications() : base(null)
         {
             AddInclude(u => u.Variants);
+            AddInclude(p => p.Category);
         }
     }
 }

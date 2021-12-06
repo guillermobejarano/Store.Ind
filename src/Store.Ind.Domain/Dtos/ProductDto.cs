@@ -20,6 +20,7 @@ namespace Store.Ind.Domain.Dtos
 
         public int CategoryId { get; set; }
 
+        public string CategoryName { get; set; }
         public string BrandName { get; set; }
 
         public List<VariantDto> Variants { get; set; }
