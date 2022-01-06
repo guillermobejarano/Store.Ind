@@ -96,7 +96,7 @@ namespace Store.Ind.Api.Controllers
 
         [HttpPost]
         [Route("import")]
-        public async Task<IEnumerable<object>> Import(IFormFile file)
+        public async Task<ActionResult> Import(IFormFile file)
         {
             FileHelperEngine engine = new FileHelperEngine(typeof(ProductDto));
 
@@ -105,10 +105,21 @@ namespace Store.Ind.Api.Controllers
             records = (ProductDto[])engine.ReadStream(
                                  new StreamReader(file.OpenReadStream()), int.MaxValue);
 
-            // Now "records" array contains all the records in the
-            // uploaded file and can be acceded like this:
+            foreach (var product in records)
+            {
+                await _service.Create(new Domain.Dtos.ProductDto
+                {
+                    Name = product.Name,
+                    CategoryId = product.CategoryId,
+                    Barcode = product.Barcode,
+                    CostPrice = product.CostPrice,
+                    FinalPrice = product.FinalPrice,
+                    CreatedAt = product.CreatedAt,
+                    Description = product.Description
+                });
+            }
 
-            return await _service.ListAll();
+            return Ok();
         }
 
         private string GetFileNameExportCsv(string name)
